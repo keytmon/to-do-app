@@ -1,21 +1,73 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Madimi+One&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+          rel="stylesheet">
     <title>Do something</title>
+    <link type="image/x-icon" href="images/favicon.png" rel="shortcut icon">
+    <link type="Image/x-icon" href="images/favicon.png" rel="icon">
 </head>
 <body>
-<header class="container">
+<header class="header-container">
     <div class="header-content">
-        <a href="index.html" class="header__logo">Do something</a>
-        <img src="">
+        <div class="header-title">
+            <a href="index.html" class="header-logo">Do something</a>
+        </div>
+        <div class="theme-switch">
+            <img src="images/light.png" alt="sun">
+        </div>
+        <div class="background"><img src="images/background-light1.jpg" alt="foggy forest">
+            <div class="background-fog">
+                <img class="header-background-fog" src="images/fog.png" alt="fog">
+                <img class="header-background-fog-head" src="images/fog-head.png" alt="fog">
+            </div>
+        </div>
     </div>
 </header>
+
+<div class="todo-container">
+
+    <div class="create-todo">
+        <form>
+            <input type="text" class="create-todo-input" placeholder="Create new todo">
+            <button type="submit" class="add-todo">
+                <img src="images/add-todo.png" alt="stars">
+            </button>
+        </form>
+    </div>
+
+    <div class="todo-list">
+        <div class="todo-items-container">
+            <div class="todo-item"> <p>Do homework after school</p>
+                <button type="button" class="todo-completed"></button>
+            </div>
+            <div class="todo-item"> <p>Do homework after school</p></div>
+            <div class="todo-item"> <p>Do homework after school</p></div>
+            <div class="todo-item"> <p>Do homework after school</p></div>
+        </div>
+
+        <div class="todo-parameters">
+            <div class="todo-counter">5 active todos</div>
+            <div class="view-parameters">
+                <button type="button" class="show-all">All</button>
+                <button type="button" class="show-active">Active</button>
+                <button type="button" class="show-completed">Completed</button>
+            </div>
+            <div class="clear-todo">
+                <img src="images/clear-todo.png" alt="trash">
+            </div>
+        </div>
+    </div>
+
+</div>
 
 <script src="app.js"></script>
 </body>
