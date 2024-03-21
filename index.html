@@ -16,27 +16,28 @@
     <link type="Image/x-icon" href="images/favicon.png" rel="icon">
 </head>
 <body>
-<header class="header-container">
-    <div class="header-content">
-        <div class="header-title">
-            <a href="index.html" class="header-logo">Do something</a>
-        </div>
-        <div class="theme-switch">
-            <img src="images/light.png" alt="sun">
-        </div>
-        <div class="background"><img src="images/background-light1.jpg" alt="foggy forest">
-            <div class="background-fog">
-                <img class="header-background-fog" src="images/fog.png" alt="fog">
-                <img class="header-background-fog-head" src="images/fog-head.png" alt="fog">
-            </div>
-        </div>
+<div class="header-content">
+    <div class="header-title">
+        <a href="index.html" class="header-logo">Do something</a>
     </div>
-</header>
+    <div class="theme-switch">
+        <img src="images/light.png" alt="sun">
+    </div>
+</div>
+
+<div class="background">
+    <div class="background-image">
+        <img src="images/background-light.jpg" alt="foggy forest">
+    </div>
+    <div class="background-fog">
+        <img class="header-background-fog" src="images/fog.png" alt="fog">
+    </div>
+
+</div>
 
 <div class="todo-container">
-
     <div class="create-todo">
-        <form>
+        <form class="todo-form">
             <input type="text" class="create-todo-input" placeholder="Create new todo">
             <button type="submit" class="add-todo">
                 <img src="images/add-todo.png" alt="stars">
@@ -49,15 +50,18 @@
             <div class="todo-item"> <p>Do homework after school</p>
                 <button type="button" class="todo-completed"></button>
             </div>
-            <div class="todo-item"> <p>Do homework after school</p></div>
-            <div class="todo-item"> <p>Do homework after school</p></div>
-            <div class="todo-item"> <p>Do homework after school</p></div>
+            <div class="todo-item"> <p>Do homework after school</p>
+                <button type="button" class="todo-completed"></button></div>
+            <div class="todo-item"> <p>Do homework after school</p>
+                <button type="button" class="todo-completed"></button></div>
+            <div class="todo-item"> <p>Do homework after school</p>
+                <button type="button" class="todo-completed"></button></div>
         </div>
 
         <div class="todo-parameters">
             <div class="todo-counter">5 active todos</div>
             <div class="view-parameters">
-                <button type="button" class="show-all">All</button>
+                <button type="button" class="show-all-active">All</button>
                 <button type="button" class="show-active">Active</button>
                 <button type="button" class="show-completed">Completed</button>
             </div>
@@ -66,7 +70,6 @@
             </div>
         </div>
     </div>
-
 </div>
 
 <script src="app.js"></script>

@@ -1,78 +1,88 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    /*box-sizing: border-box;*/
 }
 body {
     background-color: rgba(25, 68, 60, 0.3);
     font-family: "Madimi One", sans-serif;
 }
 
-.header-container{
-    height: 845px;
-}
+/* header */
 .header-content {
-    /*align-items: center;*/
-    align-items: flex-start;
+    display: flex;
+    position: relative;
+    z-index: 2;
     justify-content: space-between;
-    width: 100%;
+    width: 100vw;
 }
 
-.background{
-    /*opacity: 0.8;*/
-    width: 100%;
-    height: 845px;
-}
-
-
-.header-background-fog {
-    position: absolute;
-    top: 44%;
-    height: 420px;
-    width: 100%;
-}
-
-.header-background-fog-head {
-    position: absolute;
-    top: 25.1%;
-    height: 180px;
-    width: 100%;
+.header-title {
+    padding: 0.8em;
 }
 
 .header-logo {
-    position: absolute;
-    top: 16px;
-    left: 16px;
-
-    font-size: 32px;
+    font-size: 2em;
     text-decoration: none;
-    color: #ffffff;
+    color: white;
 }
 
 .theme-switch{
+    padding: 0.5em;
+}
+
+
+/* background */
+.background{
     position: absolute;
-    top: 16px;
-    right: 16px;
+    top: 0;
+    z-index: 1;
+}
+
+.header-background-fog {
+    position: absolute;
+    opacity: 90%;
+    top: 20vh;
+    z-index: 2;
+    height: 460px;
+    width: 100vw;
+}
+
+.background-image {
+    height: 420px;
+}
+
+
+/* todo content */
+
+.todo-container{
+    position: relative;
+    z-index: 3;
+    top: 22vh;
+    left: 30vw;
+    max-width: 648px;
 }
 
 .create-todo {
-    position: absolute;
-    top: 30%;
-    left: 30.4%;
     background-color: white;
     border-radius: 10px;
+    max-width: 630px;
+    margin-left: 0.5em;
+}
+
+.todo-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1em 0 1em;
 }
 
 .create-todo-input {
     outline: none;
-    width: 628px;
     height: 36px;
     border-radius: 10px;
     border: none;
     font-size: 16px;
-    box-sizing: border-box;
-    padding: 16px;
-    right: 8px;
 }
 
 .add-todo {
@@ -81,105 +91,78 @@ body {
     height: 30px;
     width: 30px;
     border-radius: 10px;
-    position: absolute;
-    top: 3px;
-    right: 16px;
+    text-align: right;
     background-color: white;
 }
 
 .todo-list {
     font-family: "Nunito", sans-serif;
-    top: 36%;
-    left: 30%;
-    position: absolute;
+    margin-top: 1em;
+    background-color: rgba(40, 65, 58, 0.3);
+    border-radius: 10px;
 }
 
 .todo-items-container {
-    border-radius: 10px;
     width: 646px;
-    height: 440px;
-    background-color: rgba(40, 65, 58, 0.3);
-    padding-top: 4px;
+    height: 340px;
+    padding-top: 0.2em;
 }
 
 .todo-item {
-    width: 630px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 612px;
     height: 36px;
     border-radius: 10px;
-    padding-left: 16px;
-    padding-top: 6px;
+    padding: 0 1em 0 1em;
     font-size: 17px;
     color: rgb(37, 50, 43, 0.8);
-    margin: 8px;
+    margin: 0.5em;
     background-color: white;
 }
 
 .todo-completed {
     width: 30px;
     height: 30px;
-    position: absolute;
     border: 1px solid rgb(37, 50, 43, 0.7);
     outline: none;
-    right: 24px;
-    top: 15px;
     border-radius: 25px;
     background-color: white;
 }
 
 .todo-parameters {
-    bottom: 0;
-    left: 0;
-    position: absolute;
-    height: 60px;
-    width: 646px;
-    border-top: 2px solid rgb(37, 50, 43, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5em 1em 0.5em 1em;
+    /*border-top: 2px solid rgb(37, 50, 43, 0.1);*/
 }
 
 .todo-counter {
-    position: absolute;
-    top: 22px;
-    left: 16px;
-    font-size: 16px;
-    height: 30px;
-    width: 210px;
+    font-size: 1em;
     color: rgb(37, 50, 43, 0.8);
 }
 
-.view-parameters {
-    position: absolute;
-    left: 252px;
-    top: 22px;
-}
-
-.show-all {
+.show-all-active {
     height: 26px;
     width: 30px;
     background-color: rgb(37, 50, 43, 0.3);
     border-radius: 25px;
-    /*border: 1px solid rgb(37, 50, 43, 0.8);*/
     border: none;
-    font-size: 16px;
+    font-size: 1em;
     color: rgb(95, 197, 29);
 
 }
 
+.show-all,
 .show-active,
 .show-completed {
+    padding-left: 1em;
     height: 26px;
-    width: 80px;
     background-color: rgb(0, 0, 0, 0);
     border-radius: 25px;
     border: none;
     font-size: 16px;
     color: rgb(37, 50, 43, 0.7);
-    /*text-align: left;*/
-    /*border: 1px solid rgb(37, 50, 43, 0.8);*/
-}
-
-.clear-todo {
-    position: absolute;
-    top: 6px;
-    right: 16px;
-    height: 40px;
-    width: 40px;
 }
