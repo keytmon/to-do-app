@@ -1,7 +1,6 @@
 * {
     margin: 0;
     padding: 0;
-    /*box-sizing: border-box;*/
 }
 body {
     background-color: rgba(25, 68, 60, 0.3);
@@ -14,7 +13,6 @@ body {
     position: relative;
     z-index: 2;
     justify-content: space-between;
-    width: 100vw;
 }
 
 .header-title {
@@ -39,17 +37,24 @@ body {
     z-index: 1;
 }
 
-.header-background-fog {
+.background-fog {
     position: absolute;
     opacity: 90%;
-    top: 20vh;
+    top: 18vh;
     z-index: 2;
-    height: 460px;
+}
+
+.header-background-fog {
+    height: 440px;
     width: 100vw;
 }
 
 .background-image {
-    height: 420px;
+    position: relative;
+}
+
+.background-light {
+    width: 100vw;
 }
 
 
@@ -58,16 +63,16 @@ body {
 .todo-container{
     position: relative;
     z-index: 3;
-    top: 22vh;
+    top: 18vh;
     left: 30vw;
-    max-width: 648px;
+    width: 37vw;
 }
 
 .create-todo {
     background-color: white;
     border-radius: 10px;
-    max-width: 630px;
-    margin-left: 0.5em;
+    margin-left: 0.6em;
+    width: 36vw;
 }
 
 .todo-form {
@@ -89,7 +94,6 @@ body {
     outline: none;
     border: none;
     height: 30px;
-    width: 30px;
     border-radius: 10px;
     text-align: right;
     background-color: white;
@@ -103,16 +107,14 @@ body {
 }
 
 .todo-items-container {
-    width: 646px;
-    height: 340px;
     padding-top: 0.2em;
+    height: 40vh;
 }
 
 .todo-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 612px;
     height: 36px;
     border-radius: 10px;
     padding: 0 1em 0 1em;
@@ -165,4 +167,9 @@ body {
     border: none;
     font-size: 16px;
     color: rgb(37, 50, 43, 0.7);
+}
+
+.clear-todo {
+    width: 1.8em;
+    padding-right: 0.6em;
 }
