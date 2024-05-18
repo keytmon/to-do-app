@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function (){
     const emptyListElement = document.querySelector('.todo-empty');
     const clearList = document.querySelector('.clear-todo');
 
-    const todos = []
+    let todos = []
     // const allToDos = document.querySelector('.show-all');
     // const activeToDos = document.querySelector('.show-active');
     // const completedToDos = document.querySelector('.show-completed');
@@ -76,18 +76,23 @@ document.addEventListener("DOMContentLoaded", function (){
             button.classList.add("checked");
             item.classList.add("checked");
         }
-
     }
+
+    const toggleChecked = (item) =>
+        todos = todos.map((todoItem) => todoItem.name === item.name ? {...item, checked: !item.checked} : item)
 
     const todosToHtml = () => todos.map((item) => {
         const todoItem = document.createElement('div')
-        todoItem.classList.add("todo-item")
+        todoItem.classList.add("todo-item", item.checked ? "checked": undefined)
         todoItem.innerHTML=`
-            <p>${item}</p>
-            <button class="todo-completed"></button>
+            <p>${item.name}</p>
+            <button class="todo-completed ${item.checked ? "checked": ""}"></button>
         `
         const todoButton = todoItem.querySelector('.todo-completed');
-        todoButton.addEventListener("click", () => doChecked(todoItem, todoButton));
+        todoButton.addEventListener("click", () => {
+            toggleChecked(item)
+            doChecked(todoItem, todoButton)
+        });
         return todoItem
     })
 
@@ -97,7 +102,8 @@ document.addEventListener("DOMContentLoaded", function (){
         if(toDoInputValue.length <= 2){
             return alert("Write something");
         }
-        todos.push(toDoInputValue)
+        const todoData = {name: toDoInputValue, checked: false}
+        todos.push(todoData)
         clearInput()
         addTodoItems()
     }
