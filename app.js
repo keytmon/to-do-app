@@ -1,17 +1,29 @@
 document.addEventListener("DOMContentLoaded", function (){
     const toDoList = document.querySelector('.todo-items-container');
+    const toDoForm = document.querySelector('.todo-form');
+    const toDoInput = document.querySelector('.create-todo-input');
+    const clearList = document.querySelector('.clear-todo');
+
+    const allToDos = document.querySelector('.show-all');
+    // const activeToDos = document.querySelector('.show-active');
+    // const completedToDos = document.querySelector('.show-completed');
+
+    let toDos = [];
+
     const createEmptyElement = () => {
-        if (toDoList.children.length === 0) {
-
-            const emptyList = `
-                <div class="todo-empty">
-                    <p>You don\`t have any tasks now<br>Add something for begin!</p>
-                    <img src="images/todo-empty.png" alt="">
-                </div>
-            `;
-        toDoList.insertAdjacentHTML('afterbegin', emptyList)
-
+        const emptyListElement = document.querySelector('.todo-empty');
+        if (toDos.length === 0) {
+            const emptyList = document.createElement('div');
+            emptyList.innerHTML = `
+            <p>You don\`t have any tasks now<br>Add something for begin!</p>
+            <img src="images/todo-empty.png" alt="">
+            `
+            emptyList.classList.add('todo-empty');
+            toDoList.appendChild(emptyList);
+        } else {
+            emptyListElement.classList.toggle("none");
         }
+
     }
 
     createEmptyElement();
@@ -34,67 +46,122 @@ document.addEventListener("DOMContentLoaded", function (){
 
     themeSwitch.addEventListener("click", changeTheme);
 
+    const getToDoItems = (toDos) => toDos.map((todo) => {
+        const toDoItem = document.createElement('div');
+        toDoItem.innerHTML = `
+            <p>${todo.name}</p>
+                <button type="button" class="todo-completed ${todo.isToDoChecked ? "checked": ""}"></button>`
+        toDoItem.classList.add("todo-item", todo.isToDoChecked ? "checked" :
+            "active")
+        const completeButton = toDoList.querySelector('.todo-completed');
+        toDoItem.id = todo.id;
 
-    const toDoForm = document.querySelector('.todo-form');
-    const toDoInput = document.querySelector('.create-todo-input');
-    const emptyListElement = document.querySelector('.todo-empty');
-    const clearList = document.querySelector('.clear-todo');
-    // const allToDos = document.querySelector('.show-all');
-    // const activeToDos = document.querySelector('.show-active');
-    // const completedToDos = document.querySelector('.show-completed');
+        toDoItem.addEventListener("click", () => {
+            doChecked(toDoItem, completeButton);
+            toggleChecked(todo, toDos);
+        });
+        return toDoItem;
+    })
+
+    const addToDos = () => {
+        const items = getToDoItems(toDos);
+        if (items.length) {
+            toDoList.innerHTML = '';
+            return toDoList.append(...items);
+        }
+        createEmptyElement();
+    }
+
 
     const createToDo = (e) => {
         e.preventDefault();
-        const toDoInputValue = toDoInput.value;
-        console.log(toDoInputValue)
 
-        const toDoItemHtml = `
-            <div class="todo-item"> <p>${toDoInputValue}</p>
-                <button type="button" class="todo-completed"></button>
-            </div>
-        `
-        if(toDoInputValue.length >= 2){
-            emptyListElement.classList.add("none")
-            toDoList.insertAdjacentHTML('afterbegin', toDoItemHtml);
-        } else {
+        const toDoInputValue = toDoInput.value;
+
+        const toDosData = { name: toDoInputValue, isToDoChecked: false, id: Date.now()};
+
+        console.log(toDoInputValue);
+
+        if(toDosData.name === ''){
             alert("Write something");
+            return toDos;
         }
 
         toDoInput.value = "";
         toDoInput.focus();
 
+        toDos.unshift(toDosData);
+        console.log(toDos);
+        addToDos();
+        toDoCounter();
 
-        const toDoItem = document.querySelector('.todo-item');
-        const completeButton = document.querySelector('.todo-completed');
-        // console.log(toDoItem);
-        const checkedToDos = document.querySelector('.checked');
-
-        const doChecked = () => {
-
-            if (toDoItem.classList.contains("checked")) {
-                completeButton.classList.remove("checked");
-                toDoItem.classList.remove("checked");
-            } else {
-                completeButton.classList.add("checked");
-                toDoItem.classList.add("checked");
-                return checkedToDos;
-            }
-
-        }
-
-        toDoItem.addEventListener("click", doChecked);
     }
 
     toDoForm.addEventListener("submit", createToDo);
 
-    const clearToDo = () => {
-        confirm("Clear all?");
-        toDoList.innerHTML = "";
-        createEmptyElement();
+    const toggleChecked = (todo, toDos) => toDos.map((toDoItem) =>
+        toDoItem.id === todo.id ?
+            todo.isToDoChecked = !todo.isToDoChecked
+            : todo
+    )
+
+
+    const doChecked = (todo, button) => {
+        button = todo.querySelector('.todo-completed');
+
+        if (todo.classList.contains("checked")) {
+            button.classList.remove("checked");
+            todo.classList.remove("checked");
+            todo.classList.add("active");
+        } else {
+            console.log(button)
+            button.classList.add("checked");
+            todo.classList.remove("active");
+            todo.classList.add("checked");
+            console.log(toDos);
+        }
+
     }
 
+
+    // const showActive = () => {
+    //     activeToDos.classList.toggle("active")
+    //     toDos.filter(todo)
+    // }
+
+    const showAll = () => {
+        allToDos.classList.add("active");
+        return toDos
+    }
+
+
+    const clearToDo = () => {
+        const confirmData = confirm("Clear all?");
+        if (confirmData) {
+            toDoList.innerHTML = "";
+            toDos.length = 0;
+            createEmptyElement();
+            toDoCounter();
+        }
+    }
+
+    const toDoCounter = () => {
+        console.log(toDos.length);
+        const counterContainer = document.querySelector('.todo-counter-container');
+        const counter = document.createElement('div');
+        counter.innerHTML = `
+        <p>${toDos.length} active todos</p>
+        `
+        counter.classList.add('todo-counter');
+        counterContainer.appendChild(counter);
+        if (counterContainer.children.length > 1 ){
+            counterContainer.innerHTML= "";
+            counterContainer.appendChild(counter);
+        }
+    }
+
+    toDoCounter();
+
     clearList.addEventListener("click", clearToDo);
+    allToDos.addEventListener("click", showAll);
 })
-
-
-
