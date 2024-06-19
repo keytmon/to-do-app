@@ -16,68 +16,48 @@
     <link type="Image/x-icon" href="images/favicon.png" rel="icon">
 </head>
 <body class="light">
-<div class="header-content">
-    <div class="header-title">
-        <a href="index.html" class="header-logo">Do something</a>
-    </div>
-    <div class="theme-switch">
+    <div class="header-content">
+        <div class="header-title">
+            <a href="index.html" class="header-logo">Do something</a>
+        </div>
+        <div class="theme-switch">
             <img src="images/light.png" alt="sun">
-    </div>
-</div>
-
-<div class="background">
-    <div class="background-image">
-<!--        <img class="background-light" src="images/background-light.jpg" alt="foggy forest">-->
-    </div>
-    <div class="background-fog">
-        <img class="header-background-fog" src="images/fog.png" alt="fog">
+        </div>
     </div>
 
-</div>
-
-<div class="todo-container">
-    <div class="create-todo">
-        <form class="todo-form">
-            <input type="text" class="create-todo-input" placeholder="Create new todo">
-            <button type="submit" class="add-todo">
-                <img src="images/add-todo.png" alt="plus">
-            </button>
-        </form>
-    </div>
-
-    <div class="todo-list">
-<!--        <div class="todo-empty-container"></div>-->
-        <div class="todo-items-container">
-
-<!--            <div class="todo-empty">-->
-<!--                <p>You don`t have any tasks now<br>Add something for begin!</p>-->
-<!--            <img src="images/empty-1.png" alt=""></div>-->
-<!--            <div class="todo-item"> <p>Do something good for you</p>-->
-<!--                <button type="button" class="todo-completed"></button>-->
-<!--            </div>-->
-<!--            <div class="todo-item"> <p>Do something good for you</p>-->
-<!--                <button type="button" class="todo-completed"></button></div>-->
-<!--            <div class="todo-item"> <p>Do something good for you</p>-->
-<!--                <button type="button" class="todo-completed"></button></div>-->
-<!--            <div class="todo-item"> <p>Do something good for you</p>-->
-<!--                <button type="button" class="todo-completed"></button></div>-->
+    <div class="background">
+        <div class="background-image"></div>
+        <div class="background-fog">
+            <img class="header-background-fog" src="images/fog.png" alt="fog">
         </div>
 
-        <div class="todo-parameters">
-<!--            <div class="todo-counter">5 active todos</div>-->
-            <div class="todo-counter-container"></div>
-            <div class="view-parameters">
-                <button type="button" class="show-all active">All</button>
-                <button type="button" class="show-active">Active</button>
-                <button type="button" class="show-completed">Completed</button>
-            </div>
-            <div class="clear-todo">
-                <img src="images/clear-todo.png" alt="trash">
+    </div>
+
+    <div class="todo-container">
+        <div class="create-todo">
+            <form class="todo-form">
+                <input type="text" class="create-todo-input" placeholder="Create new todo">
+                <button type="submit" class="add-todo">
+                    <img src="images/add-todo.png" alt="plus">
+                </button>
+            </form>
+        </div>
+
+        <div class="todo-list">
+            <div class="todo-items-container"></div>
+            <div class="todo-parameters">
+                <div class="todo-counter-container"></div>
+                <div class="view-parameters">
+                    <button type="button" class="filter show-all active">All</button>
+                    <button type="button" class="filter show-active">Active</button>
+                    <button type="button" class="filter show-completed">Completed</button>
+                </div>
+                <div class="clear-todo">
+                    <img src="images/clear-todo.png" alt="trash">
+                </div>
             </div>
         </div>
     </div>
-</div>
-
 <script src="app.js"></script>
 </body>
 </html>

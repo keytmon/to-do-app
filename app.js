@@ -3,16 +3,19 @@ document.addEventListener("DOMContentLoaded", function (){
     const toDoForm = document.querySelector('.todo-form');
     const toDoInput = document.querySelector('.create-todo-input');
     const clearList = document.querySelector('.clear-todo');
-
     const allToDos = document.querySelector('.show-all');
-    // const activeToDos = document.querySelector('.show-active');
-    // const completedToDos = document.querySelector('.show-completed');
+    const activeToDos = document.querySelector('.show-active');
+    const completedToDos = document.querySelector('.show-completed');
+    const toDoFilterItem = document.querySelector('.view-parameters');
 
     let toDos = [];
+    let active = [];
+    let completed = [];
+    let filterType = 'all';
 
     const createEmptyElement = () => {
         const emptyListElement = document.querySelector('.todo-empty');
-        if (toDos.length === 0) {
+        if (toDoList.children.length === 0) {
             const emptyList = document.createElement('div');
             emptyList.innerHTML = `
             <p>You don\`t have any tasks now<br>Add something for begin!</p>
@@ -20,10 +23,9 @@ document.addEventListener("DOMContentLoaded", function (){
             `
             emptyList.classList.add('todo-empty');
             toDoList.appendChild(emptyList);
-        } else {
-            emptyListElement.classList.toggle("none");
+        } else if (emptyListElement) {
+            emptyListElement.remove();
         }
-
     }
 
     createEmptyElement();
@@ -44,46 +46,47 @@ document.addEventListener("DOMContentLoaded", function (){
         }
     }
 
-    themeSwitch.addEventListener("click", changeTheme);
+    const getToDoItems = (toDos, onCheck) => toDos.map((todo) => {
 
-    const getToDoItems = (toDos) => toDos.map((todo) => {
         const toDoItem = document.createElement('div');
         toDoItem.innerHTML = `
             <p>${todo.name}</p>
-                <button type="button" class="todo-completed ${todo.isToDoChecked ? "checked": ""}"></button>`
-        toDoItem.classList.add("todo-item", todo.isToDoChecked ? "checked" :
-            "active")
+            <button type="button" class="todo-completed ${todo.isToDoChecked ? "checked": ""}"></button>`
+        toDoItem.classList.add("todo-item", todo.isToDoChecked ? "checked" : "active")
         const completeButton = toDoList.querySelector('.todo-completed');
         toDoItem.id = todo.id;
 
         toDoItem.addEventListener("click", () => {
             doChecked(toDoItem, completeButton);
-            toggleChecked(todo, toDos);
+            toDos = toggleChecked(todo, toDos);
+            onCheck(todo);
+            addToDos();
+            toDoCounter();
+            saveData();
         });
         return toDoItem;
     })
 
     const addToDos = () => {
-        const items = getToDoItems(toDos);
+        const filteredToDos = getFilteredToDos(filterType, toDos);
+        const items = getToDoItems(filteredToDos, (todo) => toDos = toggleChecked(todo, toDos));
         if (items.length) {
             toDoList.innerHTML = '';
             return toDoList.append(...items);
+        } else {
+            createEmptyElement();
         }
-        createEmptyElement();
     }
-
 
     const createToDo = (e) => {
         e.preventDefault();
 
         const toDoInputValue = toDoInput.value;
-
-        const toDosData = { name: toDoInputValue, isToDoChecked: false, id: Date.now()};
-
-        console.log(toDoInputValue);
+        const toDosData = { name: toDoInputValue.trim(), isToDoChecked: false, id: Date.now()};
 
         if(toDosData.name === ''){
             alert("Write something");
+            toDoInput.value = "";
             return toDos;
         }
 
@@ -91,18 +94,18 @@ document.addEventListener("DOMContentLoaded", function (){
         toDoInput.focus();
 
         toDos.unshift(toDosData);
-        console.log(toDos);
         addToDos();
         toDoCounter();
-
+        saveData();
     }
-
-    toDoForm.addEventListener("submit", createToDo);
 
     const toggleChecked = (todo, toDos) => toDos.map((toDoItem) =>
         toDoItem.id === todo.id ?
-            todo.isToDoChecked = !todo.isToDoChecked
-            : todo
+            {
+                ...todo,
+                isToDoChecked: !todo.isToDoChecked
+            }
+            : toDoItem
     )
 
 
@@ -114,43 +117,89 @@ document.addEventListener("DOMContentLoaded", function (){
             todo.classList.remove("checked");
             todo.classList.add("active");
         } else {
-            console.log(button)
             button.classList.add("checked");
             todo.classList.remove("active");
             todo.classList.add("checked");
-            console.log(toDos);
         }
-
     }
 
+    const getFilteredToDos = (filterType, toDos) => {
+        createEmptyElement();
+        switch (filterType) {
+            case 'active':
+                showActive();
+                toDoList.innerHTML = '';
+                return toDos.filter((todo) => !todo.isToDoChecked)
+            case 'completed':
+                showCompleted();
+                toDoList.innerHTML = '';
+                return toDos.filter((todo) => todo.isToDoChecked)
+            default:
+                showAll();
+                return toDos;
+        }
+    }
 
-    // const showActive = () => {
-    //     activeToDos.classList.toggle("active")
-    //     toDos.filter(todo)
-    // }
+    const getFilterType = () => {
+        toDoFilterItem.addEventListener('click', (e) => {
+            const className = e.target.classList.value.split(' ').find((className =>
+                className.includes('show')));
+            filterType = className?.split('-')?.[1];
+            addToDos();
+        })
+    }
+
+    getFilterType()
+
+    const showActive = () => {
+        if (filterType === 'active'){
+            activeToDos.classList.add("active");
+            completedToDos.classList.remove("active");
+            allToDos.classList.remove("active");
+        } else {
+            activeToDos.classList.remove("active");
+        }
+    }
+
+    const showCompleted = () => {
+        if (filterType === 'completed'){
+            completedToDos.classList.add("active");
+            activeToDos.classList.remove("active");
+            allToDos.classList.remove("active");
+        } else {
+            completedToDos.classList.remove("active");
+        }
+    }
 
     const showAll = () => {
-        allToDos.classList.add("active");
-        return toDos
+        if (filterType === 'all'){
+            allToDos.classList.add("active");
+            activeToDos.classList.remove("active");
+            completedToDos.classList.remove("active");
+        } else {
+            allToDos.classList.remove("active");
+        }
     }
 
-
     const clearToDo = () => {
-        const confirmData = confirm("Clear all?");
-        if (confirmData) {
-            toDoList.innerHTML = "";
-            toDos.length = 0;
+        const confirmData = confirm("Clear all completed todos?");
+        completed = toDos.filter((todo) => todo.isToDoChecked);
+        if (confirmData && toDos.length > 0) {
+            toDoList.querySelectorAll('.checked').forEach((element) => element.remove());
+            completed.length = 0;
+            toDos = toDos.filter((todo) => !todo.isToDoChecked);
             createEmptyElement();
             toDoCounter();
         }
+        saveData();
     }
 
     const toDoCounter = () => {
-        console.log(toDos.length);
+        active = toDos.filter((todo) => !todo.isToDoChecked);
         const counterContainer = document.querySelector('.todo-counter-container');
         const counter = document.createElement('div');
         counter.innerHTML = `
-        <p>${toDos.length} active todos</p>
+        <p>${active.length} active todos</p>
         `
         counter.classList.add('todo-counter');
         counterContainer.appendChild(counter);
@@ -162,6 +211,18 @@ document.addEventListener("DOMContentLoaded", function (){
 
     toDoCounter();
 
+    if (localStorage.getItem('todos')) {
+        toDos = JSON.parse(localStorage.getItem('todos'))
+        toDos.forEach(() => {
+            addToDos();
+            toDoCounter();
+        })
+    }
+    const saveData = () => {
+        localStorage.setItem('todos', JSON.stringify(toDos));
+    }
+
+    themeSwitch.addEventListener("click", changeTheme);
+    toDoForm.addEventListener("submit", createToDo);
     clearList.addEventListener("click", clearToDo);
-    allToDos.addEventListener("click", showAll);
 })
