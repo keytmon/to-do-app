@@ -147,6 +147,7 @@ body {
     padding-top: 0.7em;
     font-size: 1.45em;
     align-items: center;
+    text-align: center;
     justify-content: center;
     color: rgb(var(--dark-green));
 }
